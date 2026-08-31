@@ -1,6 +1,5 @@
 import { Button } from "@/ui/components/Button";
 
-
 function Components() {
     return (
         <div className="flex flex-col">
@@ -22,7 +21,7 @@ function Components() {
             <h2>Buttons: </h2>
 
             <div className="flex flex-row gap-4">
-                <Button variant="normal" >
+                <Button variant="normal" type="submit" onClick={() => alert("Testando")} >
                     Hello World!
                 </Button>
             </div>
