@@ -1,0 +1,57 @@
+/*
+* DEFAULT STYLE
+*/
+.button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border: none;
+    background: none;
+    cursor: pointer;
+    font: inherit;
+    transition: all 250ms ease-on-off;
+}
+
+/*
+* NORMAL BUTTON
+*/
+.button-normal {
+    padding: 16px 24px;
+    border-radius: 8px;
+    background-color: var(--brand-color);
+    color: var(--surface-color);
+    font-weight: 500;
+}
+
+.button-normal:hover,
+.button-normal--hover {
+    background-color: var(--hover-brand-color);
+}
+
+.button-normal:active,
+.button-normal--pressed {
+    background-color: var(--press-brand-color);
+}
+
+
+/*
+* OUTLINE VARIANT
+*/
+.button-outline {
+    padding: 24px 14px;
+    background:  var(--surface-color);
+    border: solid 2px var(--brand-color);
+    color: var(--brand-color);
+}
+
+.button-outline:hover,
+.button-outline--hover {
+    background-color: var(--hover-brand-color);
+    color: var(--surface-color);
+}
+
+.button-outline:active,
+.button-outline--pressed {
+    background-color: var(--press-brand-color);
+    color: var(--surface-color);
+}
