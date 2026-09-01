@@ -48,7 +48,7 @@ export function Button({
 }: ButtonProps) {
   const [isPressed, setIsPressed] = useState(false);
 
-  async function handleClick(e: React.MouseEvent<HTMLButtonElement>) {
+  async function handleClick() {
     if (isPressed) return;
 
     try {
