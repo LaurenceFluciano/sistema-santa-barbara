@@ -2,6 +2,33 @@
 
 Sistema de escola de música. 
 
+# dev-cli Usage
+
+Para instalar docker (provavelmente você teria que instalar manualmente):
+```bash
+./dev-cli install
+```
+
+Para Inicar:
+```bash
+./dev-cli init
+```
+
+Para Começar:
+```bash
+./dev-cli run
+```
+
+Para Parar:
+```bash
+./dev-cli stop
+```
+
+Para Limpar Todos os serviços:
+```bash
+./dev-cli destroy
+```
+
 # Docker Usage
 
 Para iniciar:
