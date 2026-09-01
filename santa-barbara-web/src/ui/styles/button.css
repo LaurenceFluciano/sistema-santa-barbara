@@ -5,12 +5,28 @@
     display: inline-flex;
     align-items: center;
     justify-content: center;
+    height: fit-content;
+    width: auto;
     border: none;
     background: none;
     cursor: pointer;
     font: inherit;
-    transition: all 250ms ease-on-off;
+    font-size: 1rem;
+    font-weight: 600;
+    transition: 150ms;
 }
+
+.button:disabled,
+.button[data-disabled],
+.button:disabled:hover,
+.button:disabled:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    border: none;
+    background-color: var(--light-neutral-color);
+    color: var(--neutral-color);
+}
+
 
 /*
 * NORMAL BUTTON
@@ -20,7 +36,6 @@
     border-radius: 8px;
     background-color: var(--brand-color);
     color: var(--surface-color);
-    font-weight: 500;
 }
 
 .button-normal:hover,
@@ -38,7 +53,8 @@
 * OUTLINE VARIANT
 */
 .button-outline {
-    padding: 24px 14px;
+    padding: 14px 24px;
+    border-radius: 8px;
     background:  var(--surface-color);
     border: solid 2px var(--brand-color);
     color: var(--brand-color);
