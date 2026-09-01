@@ -1,5 +1,5 @@
 -- Tabela principal de músicas
-CREATE TABLE musica (
+CREATE TABLE IF NOT EXISTS musica (
     id UUID PRIMARY KEY NOT NULL,
     titulo VARCHAR(256) NOT NULL,
     compositor VARCHAR(256) NOT NULL,
@@ -9,7 +9,7 @@ CREATE TABLE musica (
 );
  
 -- Tabela de gêneros musicais
-CREATE TABLE genero (
+CREATE TABLE IF NOT EXISTS genero (
     id SERIAL PRIMARY KEY NOT NULL,
     nome VARCHAR(256) NOT NULL,
     criado_em TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
@@ -17,7 +17,7 @@ CREATE TABLE genero (
 );
  
 -- Tabela de relacionamento: Uma música pode ter vários gêneros
-CREATE TABLE genero_musica (
+CREATE TABLE IF NOT EXISTS genero_musica (
     id_musica UUID NOT NULL,
     id_genero INT NOT NULL,
     PRIMARY KEY (id_musica, id_genero),
@@ -30,7 +30,7 @@ CREATE TABLE genero_musica (
 -- ============================================================================
  
 -- Tabela de partituras (arranjos de músicas)
-CREATE TABLE partitura (
+CREATE TABLE IF NOT EXISTS partitura (
     id UUID PRIMARY KEY NOT NULL,
     id_musica UUID NOT NULL,
     titulo VARCHAR(256) NOT NULL,
@@ -45,7 +45,7 @@ CREATE TABLE partitura (
 );
  
 -- Tabela de instrumentos
-CREATE TABLE instrumento (
+CREATE TABLE IF NOT EXISTS instrumento (
     id SERIAL PRIMARY KEY NOT NULL,
     nome VARCHAR(256) NOT NULL,
     criado_em TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
@@ -53,7 +53,7 @@ CREATE TABLE instrumento (
 );
  
 -- Tabela de relacionamento: Uma partitura pode ser para vários instrumentos
-CREATE TABLE partitura_instrumento (
+CREATE TABLE IF NOT EXISTS partitura_instrumento (
     id_partitura UUID NOT NULL,
     id_instrumento INT NOT NULL,
     PRIMARY KEY (id_partitura, id_instrumento),
@@ -67,7 +67,7 @@ CREATE TABLE partitura_instrumento (
 -- ============================================================================
  
 -- Tabela principal de membros
-CREATE TABLE membro (
+CREATE TABLE IF NOT EXISTS membro (
     id UUID PRIMARY KEY NOT NULL,
     nome_legal VARCHAR(256) NOT NULL,
     sobrenome_legal VARCHAR(256),
@@ -81,7 +81,7 @@ CREATE TABLE membro (
 );
  
 -- Tabela de credenciais de acesso (senha)
-CREATE TABLE membro_credencial (
+CREATE TABLE IF NOT EXISTS membro_credencial (
     membro_id UUID PRIMARY KEY NOT NULL,
     hash_password VARCHAR(256) NOT NULL,
     criado_em TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
@@ -94,7 +94,7 @@ CREATE TABLE membro_credencial (
 -- ============================================================================
  
 -- Tabela de papéis (roles) no sistema
-CREATE TABLE papel (
+CREATE TABLE IF NOT EXISTS papel (
     id SERIAL PRIMARY KEY NOT NULL,
     nome VARCHAR(256) NOT NULL UNIQUE,
     criado_em TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
@@ -102,7 +102,7 @@ CREATE TABLE papel (
 );
  
 -- Tabela de relacionamento: Um membro pode ter vários papéis
-CREATE TABLE membro_papel (
+CREATE TABLE IF NOT EXISTS membro_papel (
     id_papel INT NOT NULL,
     id_membro UUID NOT NULL,
     PRIMARY KEY (id_papel, id_membro),
@@ -112,7 +112,7 @@ CREATE TABLE membro_papel (
 );
  
 -- Tabela de responsabilidade (menores de idade)
-CREATE TABLE membro_responsavel (
+CREATE TABLE IF NOT EXISTS membro_responsavel (
     id_responsavel UUID NOT NULL,
     id_membro_menor UUID NOT NULL,
     PRIMARY KEY (id_responsavel, id_membro_menor),
@@ -126,7 +126,7 @@ CREATE TABLE membro_responsavel (
 -- ============================================================================
  
 -- Tabela de relacionamento: Um membro pode tocar vários instrumentos
-CREATE TABLE instrumento_membro (
+CREATE TABLE IF NOT EXISTS instrumento_membro (
     id_membro UUID NOT NULL,
     id_instrumento INT NOT NULL,
     PRIMARY KEY (id_membro, id_instrumento),
