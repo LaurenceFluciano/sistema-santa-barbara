@@ -19,7 +19,8 @@
 
 .input:disabled,
 .input[data-disabled],
-.input:focus {
+.input[data-disabled]:focus,
+.input:disabled:focus {
     cursor: not-allowed;
     border: solid 1px var(--light-neutral-color);
     color: var(--light-neutral-color);
