@@ -6,12 +6,14 @@ import shutil
 import sys
 import argparse
 import webbrowser
+import threading
 
 current_dir = Path.cwd()
 current_os = platform.system()
 
 paths = {
-    "frontend": current_dir / "santa-barbara-web"
+    "frontend": current_dir / "santa-barbara-web",
+    "backend": current_dir / "santa-barbara-api" / "bandasantabarbara"
 }
 
 class AppState:
@@ -127,9 +129,54 @@ def init():
         print("> Instalando dependências do Frontend (npm install)...")
         run_command(["npm", "install"], working_dir=paths["frontend"])
 
+        print("> Baixando dependências e compilando o Backend (Maven)...")
+        mvn_cmd = "./mvnw" if current_os != "Windows" else "mvnw.cmd"
+        run_command([mvn_cmd, "compile"], working_dir=paths["backend"])
+
         print("\nAmbiente inicializado com sucesso! Execute './dev-cli run' para iniciar.")
     except Exception:
         print("\nProcesso de inicialização abortado devido a um erro.")
+
+def run_backend_in_new_terminal():
+    backend_path = paths["backend"]
+    mvn_cmd = "./mvnw spring-boot:run" if current_os != "Windows" else "mvnw.cmd spring-boot:run"
+
+    print("> Abrindo terminal dedicado para o Backend Spring Boot...")
+    
+    if current_os == "Linux":
+        try:
+            subprocess.Popen(["gnome-terminal", "--", "bash", "-c", f"cd '{backend_path}' && {mvn_cmd}; exec bash"])
+        except FileNotFoundError:
+            subprocess.Popen(["x-terminal-emulator", "-e", f"bash -c 'cd \"{backend_path}\" && {mvn_cmd}; exec bash'"])
+            
+    elif current_os == "Darwin":
+        script = f'tell application "Terminal" to do script "cd \\"{backend_path}\\" && {mvn_cmd}"'
+        subprocess.Popen(["osascript", "-e", script])
+        
+    elif current_os == "Windows":
+        subprocess.Popen(f'start cmd /k "cd /d "{backend_path}" && {mvn_cmd}"', shell=True)
+
+"""
+def run_backend():
+    mvn_cmd = "./mvnw" if current_os != "Windows" else "mvnw.cmd"
+    backend_path = paths["backend"]
+    
+    print("> Subindo Backend Spring Boot (./mvnw spring-boot:run)...")
+    try:
+        subprocess.run([mvn_cmd, "spring-boot:run"], cwd=backend_path, check=True)
+    except Exception as e:
+        print(f"\n[ERRO no Backend]: {e}")
+"""
+
+def run_frontend():
+    front_end = paths["frontend"]
+    
+    print("> Iniciando servidor Frontend (npm run dev)...")
+    try:
+        subprocess.run(["npm", "run", "dev"], cwd=front_end, check=True)
+    except Exception as e:
+        print(f"\n[ERRO no Frontend]: {e}")
+
 
 def run():
     """Inicia os serviços Docker e o servidor Frontend"""
@@ -139,8 +186,8 @@ def run():
         run_command(["docker", "compose", "start"])
         AppState.is_docker_run = True
 
-        print("> Iniciando servidor Frontend (npm run dev)...")
-        run_command(["npm", "run", "dev"], working_dir=paths["frontend"], wait_and_capture=False)
+        run_backend_in_new_terminal()
+        run_frontend()
     
     except Exception:
         print("\nProcesso de execução abortado.")

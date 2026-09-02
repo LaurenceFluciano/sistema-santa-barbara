@@ -2,31 +2,107 @@
 
 Sistema de escola de música. 
 
-# dev-cli Usage
+## Requisitos do projeto
+- Docker & Docker Compose
+- Java 25 
+- Node.js 22v
+
+# CLI de Desenvolvimento (`dev-cli`)
+
+O orquestrador do ambiente automatiza a subida do banco de dados no Docker (PostgreSQL), compilação e execução do backend (Spring Boot) e servidor de desenvolvimento do frontend (Vite/React).
+
+> **Nota:** No Windows, você pode executar o comando diretamente como `.\dev-cli` (ou `dev-cli`). No Linux e macOS, utilize o executável com o sufixo do seu sistema operacional (`./dev-cli-linux` ou `./dev-cli-macos`).
+
+---
+
+## Usando dev-cli no Windows
+
+> **Dica:** Lembre-se de conceder permissão de execução caso necessário.
 
 Para instalar docker (provavelmente você teria que instalar manualmente):
 ```bash
-./dev-cli install
+.\dev-cli install
 ```
 
 Para Inicar:
 ```bash
-./dev-cli init
+.\dev-cli init
 ```
 
 Para Começar:
 ```bash
-./dev-cli run
+.\dev-cli run
 ```
 
 Para Parar:
 ```bash
-./dev-cli stop
+.\dev-cli stop
+```
+> **Dica**: você pode usar `ctrl + c` no terminal que faz o mesmo efeito.
+
+Destruir volumes Docker e limpar `node_modules`:
+```bash
+.\dev-cli destroy
 ```
 
-Para Limpar Todos os serviços:
+## Usando dev-cli no Linux
+
+> **Dica:** Antes de executar pela primeira vez, garanta a permissão de execução com `chmod +x dev-cli-linux`.
+
+Para instalar docker (provavelmente você teria que instalar manualmente):
 ```bash
-./dev-cli destroy
+./dev-cli-linux install
+```
+
+Para Inicar:
+```bash
+./dev-cli-linux init
+```
+
+Para Começar:
+```bash
+./dev-cli-linux run
+```
+
+Para Parar:
+```bash
+./dev-cli-linux stop
+```
+> **Dica**: você pode usar `ctrl + c` no terminal que faz o mesmo efeito.
+
+Destruir volumes Docker e limpar `node_modules`:
+```bash
+./dev-cli-linux destroy
+```
+
+## Usando dev-cli no Macos
+
+> **Dica**: Antes de executar pela primeira vez, garanta a permissão de execução com `chmod +x dev-cli-macos`.
+
+Para instalar docker (provavelmente você teria que instalar manualmente):
+```bash
+./dev-cli-macos install
+```
+
+Para Inicar:
+```bash
+./dev-cli-macos init
+```
+
+Para Começar:
+```bash
+./dev-cli-macos run
+```
+
+Para Parar:
+```bash
+./dev-cli-macos stop
+```
+> **Dica**: você pode usar `ctrl + c` no terminal que faz o mesmo efeito.
+
+Destruir volumes Docker e limpar `node_modules`:
+```bash
+./dev-cli-macos destroy
 ```
 
 # Docker Usage
