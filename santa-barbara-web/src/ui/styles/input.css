@@ -2,7 +2,7 @@
 * DEFAULT STYLE
 */
 .input {
-    display: inline-flex;
+    display: flex;
     align-items: start;
     justify-content: center;
     height: fit-content;
