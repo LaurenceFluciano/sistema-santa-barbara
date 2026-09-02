@@ -1,5 +1,7 @@
 import { Button } from "@/ui/components/button";
 import { Input } from "@/ui/components/input";
+import { Card} from "@/ui/components/card";
+import { Avatar} from "@/ui/components/avatar";
 
 function Components() {
     return (
@@ -66,6 +68,21 @@ function Components() {
                 <Input variant="normal" placeholder="Testing" className="w-[100%]" disabled/>
 
             </div>
+
+            <h2 className="my-8">Card test: </h2>
+
+                <div className="p-8 bg-gray-100 rounded-lg">
+            <Card>
+                <h2>Testando Card</h2>
+            </Card>
+        </div>
+            <h2 className="my-8">Avatar test: </h2>
+
+            <div className="flex flex-row gap-4">
+                <Avatar />
+               
+            </div>
+
         </div>
     )
 }
