@@ -37,10 +37,10 @@ export function ProfilePage() {
 
     return (
         <div className="max-w-5xl mx-auto p-6 space-y-6">
-            <h1 className="text-2xl font-bold text-(--strong-foreground-color)]">Meu Perfil</h1>
+            <h1 className="text-2xl font-bold text-(--strong-foreground-color)">Meu Perfil</h1>
 
         {successMessage && (
-                <div className="p-4 text-sm text-green-800 rounded-lg bg-green-50 border border-green-200 transition-all">
+                <div className="p-4 text-sm text-(--success-color) rounded-lg bg-(--success-color)/20 border border-(--success-color)/50 transition-all">
                     {successMessage}
                 </div>
             )}
@@ -49,7 +49,7 @@ export function ProfilePage() {
                 <div className="flex items-center gap-4">
                     <Avatar  className="w-20 h-20" />
                     <div>
-                        <h2 className="text-4xl font-bold text-(--strong-foreground-color)]">
+                        <h2 className="text-4xl font-bold text-(--strong-foreground-color)">
                             {profile.fullName}
                         </h2>
                         <p className="text-xl text-(--strong-foreground-color)">{profile.role}</p>
@@ -76,11 +76,11 @@ export function ProfilePage() {
 
             <Card className="space-y-4">
                 <div className="flex flex-col gap-4">
-                    <div className="flex items-center justify-start gap-2 border-b border-gray-100 pb-3">
+                    <div className="flex items-center justify-start gap-2 border-b text-(--light-neutral-color) pb-3">
                         <span className="text-2xl font-semibold text-(--strong-foreground-color) ">Telefone:</span>
                         <div >
                             {!isEditing ? (
-                                <span className=" text-gray-900 text-lg" >{profile.phone}</span>
+                                <span className=" text-(--strong-foreground-color) text-lg" >{profile.phone}</span>
                             ) : (
                                 <Input 
                                     value={profile.phone} 
@@ -90,11 +90,11 @@ export function ProfilePage() {
                         </div>
                     </div>
 
-                    <div className="flex items-center justify-start gap-2 border-b border-gray-100 pb-3">
+                    <div className="flex items-center justify-start gap-2 border-b text-(--light-neutral-color) pb-3">
                         <span className="text-2xl font-semibold text-(--strong-foreground-color) ">Endereço:</span>
                         <div>
                             {!isEditing ? (
-                                <span className="text-gray-900 text-lg">{profile.adress}</span>
+                                <span className="text-(--strong-foreground-color) text-lg">{profile.adress}</span>
                             ) : (
                                 <Input 
                                     value={profile.adress} 
@@ -104,11 +104,11 @@ export function ProfilePage() {
                         </div>
                     </div>
 
-                    <div className="flex items-center justify-start gap-2 border-b border-gray-100 pb-3">
+                    <div className="flex items-center justify-start gap-2 border-b text-(--light-neutral-color) pb-3">
                         <span className="text-2xl font-semibold text-(--strong-foreground-color) ">Gmail:</span>
                         <div >
                             {!isEditing ? (
-                                <span className="text-gray-900 text-lg">{profile.email}</span>
+                                <span className="text-(--strong-foreground-color) text-lg">{profile.email}</span>
                             ) : (
                                 <Input 
                                     value={profile.email} 
@@ -122,7 +122,7 @@ export function ProfilePage() {
                         <span className="text-2xl font-semibold text-(--strong-foreground-color) ">Instrumentos:</span>
                         <div >
                             {!isEditing ? (
-                                <span className="text-lg text-gray-900">{profile.instrumentos}</span>
+                                <span className="text-lg text-(--strong-foreground-color)">{profile.instrumentos}</span>
                             ) : (
                                 <Input 
                                     value={profile.instrumentos} 
