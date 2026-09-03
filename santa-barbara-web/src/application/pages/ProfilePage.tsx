@@ -3,6 +3,7 @@ import { Card } from "@/ui/components/card";
 import { Avatar } from "@/ui/components/avatar";
 import { Input } from "@/ui/components/input";
 import { Button } from "@/ui/components/button";
+import { SuccessCard } from "@/ui/components/sucessCard";
 import { Edit2, Save, X } from "lucide-react";
 
 export function ProfilePage() {
@@ -39,11 +40,7 @@ export function ProfilePage() {
         <div className="max-w-5xl mx-auto p-6 space-y-6">
             <h1 className="text-2xl font-bold text-(--strong-foreground-color)">Meu Perfil</h1>
 
-        {successMessage && (
-                <div className="p-4 text-sm text-(--success-color) rounded-lg bg-(--success-color)/20 border border-(--success-color)/50 transition-all">
-                    {successMessage}
-                </div>
-            )}
+            <SuccessCard successMessage={successMessage} />
          
             <Card className="flex items-center justify-between">
                 <div className="flex items-center gap-4">
