@@ -1,4 +1,4 @@
 package br.org.bandasantabarbara.application;
 
-public class DefaultMessageResponse {
+public record DefaultMessageResponse(String message) {
 }
