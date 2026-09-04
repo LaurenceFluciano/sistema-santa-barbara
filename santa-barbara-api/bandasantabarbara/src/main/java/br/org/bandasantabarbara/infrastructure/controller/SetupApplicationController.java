@@ -1,4 +1,4 @@
-package br.org.bandasantabarbara.controller;
+package br.org.bandasantabarbara.infrastructure.controller;
 
 import br.org.bandasantabarbara.application.DefaultMessageResponse;
 import br.org.bandasantabarbara.application.RegisterAdminDTO;

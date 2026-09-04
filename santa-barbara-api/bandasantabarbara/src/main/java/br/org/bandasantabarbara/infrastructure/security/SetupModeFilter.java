@@ -1,4 +1,4 @@
-package br.org.bandasantabarbara.security;
+package br.org.bandasantabarbara.infrastructure.security;
 
 import br.org.bandasantabarbara.application.DefaultMessageResponse;
 import br.org.bandasantabarbara.repositories.MembroRepository;
