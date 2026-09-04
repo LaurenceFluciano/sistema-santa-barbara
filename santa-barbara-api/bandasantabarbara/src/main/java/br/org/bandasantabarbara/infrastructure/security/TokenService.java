@@ -34,6 +34,7 @@ public class TokenService {
                 .expiresAt(agora.plusSeconds(expiracaoSegundos))
                 .subject(membro.getId().toString())
                 .claim("email", membro.getEmail())
+                .claim("nomeUsuario", membro.getNomeDeUsuario())
                 .build();
 
         var header = JwsHeader.with(SignatureAlgorithm.RS256).build();
