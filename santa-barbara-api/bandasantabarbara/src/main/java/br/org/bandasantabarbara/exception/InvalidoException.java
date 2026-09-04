@@ -1,7 +1,7 @@
 package br.org.bandasantabarbara.exception;
 
-public class InvalidoException extends RuntimeException {
-  public InvalidoException(String message) {
-    super(message);
-  }
+public class InvalidoException extends ApplicationException {
+    public InvalidoException(String message) {
+        super(message);
+    }
 }

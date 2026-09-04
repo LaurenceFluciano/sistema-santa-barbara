@@ -1,39 +1,43 @@
 package br.org.bandasantabarbara.application;
 
-import org.springframework.security.core.token.TokenService;
+import br.org.bandasantabarbara.exception.InvalidoException;
+import br.org.bandasantabarbara.exception.NaoEncontradoException;
+import br.org.bandasantabarbara.infrastructure.security.TokenService;
+import br.org.bandasantabarbara.repositories.MembroRepository;
+
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class AutenticarMembroUseCase {
 
-    private final MembroCredencialRepository credencialRepository;
+    private final MembroRepository membroRepository;
     private final PasswordEncoder passwordEncoder;
     private final TokenService tokenService;
 
     public AutenticarMembroUseCase(
-            MembroCredencialRepository credencialRepository,
+            MembroRepository membroRepository,
             PasswordEncoder passwordEncoder,
             TokenService tokenService) {
-        this.credencialRepository = credencialRepository;
+        this.membroRepository = membroRepository;
         this.passwordEncoder = passwordEncoder;
         this.tokenService = tokenService;
     }
 
     @Transactional(readOnly = true)
     public TokenResponse executar(LoginRequest request) {
-        var credencial = credencialRepository.findByUsername(request.username())
-                .orElseThrow(CredenciaisInvalidasException::new);
+        var membro = membroRepository.findByUsernameOuEmail(request.login())
+                .orElseThrow(() -> new InvalidoException("Usuário ou senha incorreto."));
 
-        // O passwordEncoder.matches extrai os parâmetros (salt, custo) do hash Argon2
-        // e valida se a senha em texto puro gera o mesmo hash.
-        boolean senhaValida = passwordEncoder.matches(request.senha(), credencial.getHashPassword());
+        boolean senhaValida = passwordEncoder.matches(request.senha(), membro.getCredencial().getHashSenha());
 
         if (!senhaValida) {
-            throw new CredenciaisInvalidasException();
+            throw new InvalidoException("Usuário ou senha incorreto.");
         }
 
-        String token = tokenService.gerarToken(credencial.getMembro());
+        String token = tokenService.gerarToken(membro);
         return TokenResponse.bearer(token, tokenService.getTempoExpiracaoSegundos());
     }
+
 }
