@@ -4,15 +4,9 @@ import jakarta.persistence.*;
 import lombok.Getter;
 
 import java.time.Instant;
-import java.util.UUID;
 
-@Entity
-@Table(name = "membro_credencial")
+@Embeddable
 public class MembroCredencial {
-
-    @Id
-    @Getter
-    private UUID id;
 
     @Getter
     @Column(name = "hash_password", nullable = false)
@@ -26,31 +20,18 @@ public class MembroCredencial {
     @Column(name = "atualizado_em", nullable = false)
     private Instant atualizadoEm;
 
-    /*
-     *
-     * RELAÇÕES
-     *
-     */
 
-    @OneToOne
-    @MapsId
-    @JoinColumn(name = "membro_id") // Define o nome da coluna física no banco de dados
-    public Membro membro;
+    protected MembroCredencial(String hashSenha) {
+        this();
+        this.hashSenha = hashSenha;
+    }
 
     protected MembroCredencial() {
-        criadoEm = Instant.now();
-        atualizadoEm = Instant.now();
+        this.criadoEm = Instant.now();
+        this.atualizadoEm = Instant.now();
     }
 
-    public static MembroCredencial criar(Membro membro) {
-        var membroCredencial = new MembroCredencial();
-        membroCredencial.membro = membro;
-
-        return membroCredencial;
-    }
-
-
-    public void alterarHashSenha(String hashSenha) {
+    protected void alterarHashSenha(String hashSenha) {
         this.hashSenha = hashSenha;
         this.atualizadoEm = Instant.now();
     }

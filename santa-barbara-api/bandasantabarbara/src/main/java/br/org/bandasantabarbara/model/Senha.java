@@ -1,26 +1,48 @@
 package br.org.bandasantabarbara.model;
 
+import br.org.bandasantabarbara.exception.DomainException;
 import lombok.Getter;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class Senha {
 
-    @Getter
-    private String value;
+    private final String valor;
 
-    protected Senha(String value) {
-        this.value = value;
+    private Senha(String valor) {
+        this.valor = valor;
     }
 
-    public static Senha deHashPronto(String hash) {
-        return new Senha(hash);
+    public String valor() {
+        return  this.valor;
     }
 
-    protected static Senha criar(String password) {
-        // TO-DO: Adicionar regras de negócio:
-        // minimo 8 letras,
-        // 1 simbolo especial,
-        // numero e letra maiuscula.
+    public static Senha criar(String senhaExternal) {
+        List<String> errors = new ArrayList<>();
 
-        return new Senha(password);
+        var senha = senhaExternal.trim();
+
+        if (senha.length() < 8) {
+            errors.add("A senha deve possuir no mínimo 8 caracteres.");
+        }
+
+        if (!senha.matches(".*[A-Z].*")) {
+            errors.add("A senha deve possuir pelo menos uma letra maiúscula.");
+        }
+
+        if (!senha.matches(".*\\d.*")) {
+            errors.add("A senha deve possuir pelo menos um número.");
+        }
+
+        if (!senha.matches(".*[-#@_].*")) {
+            errors.add("A senha deve possuir pelo menos um símbolo especial (-, #, @ ou _).");
+        }
+
+        if (!errors.isEmpty()) {
+            throw  new DomainException("Senha inválida", errors);
+        }
+
+        return new Senha(senha);
     }
 }
