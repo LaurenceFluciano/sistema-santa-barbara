@@ -1,6 +1,7 @@
 package br.org.bandasantabarbara.infrastructure.config;
 
 import br.org.bandasantabarbara.infrastructure.security.SetupModeFilter;
+import jakarta.servlet.http.Cookie;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -11,6 +12,7 @@ import org.springframework.security.config.annotation.web.configurers.AbstractHt
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.argon2.Argon2PasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.oauth2.server.resource.web.BearerTokenResolver;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
@@ -47,11 +49,28 @@ public class SecurityConfig {
 
         http
             .oauth2ResourceServer(
-                    oauth2 -> oauth2.jwt(Customizer.withDefaults())
-            )
-            .addFilterBefore(setupModeFilter, UsernamePasswordAuthenticationFilter.class);
+                    oauth2 ->
+                            oauth2
+                                    .jwt(Customizer.withDefaults())
+                                    .bearerTokenResolver(cookieBearerTokenResolver())
+            );
+
 
         return http.build();
+    }
+
+
+    private BearerTokenResolver cookieBearerTokenResolver() {
+        return request -> {
+            if (request.getCookies() != null) {
+                for (Cookie cookie : request.getCookies()) {
+                    if ("access_token".equals(cookie.getName())) {
+                        return cookie.getValue();
+                    }
+                }
+            }
+            return null;
+        };
     }
 
     @Bean
