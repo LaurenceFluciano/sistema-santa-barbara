@@ -4,6 +4,7 @@ import br.org.bandasantabarbara.infrastructure.security.SetupModeFilter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
@@ -24,7 +25,8 @@ public class SecurityConfig {
             "/v3/api-docs/**",
             "/swagger-ui/**",
             "/swagger-ui.html",
-            "/setup"
+            "/setup",
+            "/auth/login"
     };
 
     @Bean
@@ -42,6 +44,8 @@ public class SecurityConfig {
             auth.requestMatchers(PUBLIC_ROUTES).permitAll();
             auth.anyRequest().authenticated();
         });
+
+        http.oauth2ResourceServer(oauth2 -> oauth2.jwt(Customizer.withDefaults()));
 
         return http.build();
     }
